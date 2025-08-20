@@ -10,21 +10,21 @@ public class ContorollerGame {
     static double boardSize = 654.5;
     static double cellSize = boardSize / 10;
 
-    static Map<Integer, Integer> snake = new HashMap<>();
-    static Map<Integer, Integer> ladder = new HashMap<>();
+    public static Map<Integer, Integer> snake = new HashMap<>();
+    public static Map<Integer, Integer> ladder = new HashMap<>();
 
-    static int random;
-
+    public static int random;
 
     public static void initializeBoard() {
-
         gameOver = false;
         winnerIndex = -1;
-        Snake();
-        ladder();
+        snake.clear();
+        ladder.clear();
+        initSnakes();
+        initLadders();
     }
 
-    public static void Snake() {
+    private static void initSnakes() {
         snake.put(24, 19);
         snake.put(36, 14);
         snake.put(46, 32);
@@ -36,7 +36,7 @@ public class ContorollerGame {
         snake.put(97, 82);
     }
 
-    public static void ladder() {
+    private static void initLadders() {
         ladder.put(1, 38);
         ladder.put(9, 31);
         ladder.put(13, 56);
@@ -58,7 +58,7 @@ public class ContorollerGame {
         return new Point2D(x, y);
     }
 
-    public static List<Point2D> movePlayerWithSteps(Player player, int playerIndex) {
+    public static List<Point2D> movePlayerWithSteps(BasePlayer player, int playerIndex) {
         List<Point2D> steps = new ArrayList<>();
 
         if (gameOver) {
@@ -70,8 +70,7 @@ public class ContorollerGame {
         int diceRoll = rand();
         int tentativePos = currentPos + diceRoll;
 
-        random =diceRoll;
-
+        random = diceRoll;
 
         if (tentativePos > 100) {
             tentativePos = currentPos;
@@ -79,7 +78,8 @@ public class ContorollerGame {
 
         steps.add(coordinates(tentativePos));
 
-        int finalPos = snake.getOrDefault(tentativePos, ladder.getOrDefault(tentativePos, tentativePos));
+        int finalPos = snake.getOrDefault(tentativePos,
+                ladder.getOrDefault(tentativePos, tentativePos));
 
         if (finalPos != tentativePos) {
             steps.add(coordinates(finalPos));
@@ -99,7 +99,7 @@ public class ContorollerGame {
         return new Random().nextInt(6) + 1;
     }
 
-    public static int getPositionIndex(int playerIndex, List<Player> players) {
+    public static int getPositionIndex(int playerIndex, List<BasePlayer> players) {
         return players.get(playerIndex).getPosition();
     }
 }

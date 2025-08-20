@@ -1,10 +1,10 @@
-public class Player {
-    private String name;
-    private String color;
-    private int position;
-    private boolean hasWon;
+public abstract class BasePlayer {
+    protected String name;
+    protected String color;
+    protected int position;
+    protected boolean hasWon;
 
-    public Player(String name, String color) {
+    public BasePlayer(String name, String color) {
         this.name = name;
         this.color = color;
         this.position = 0;
@@ -34,5 +34,5 @@ public class Player {
         }
     }
 
-
+    public abstract void takeTurn();
 }

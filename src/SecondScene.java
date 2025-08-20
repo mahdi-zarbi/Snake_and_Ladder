@@ -1,11 +1,7 @@
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.Toggle;
-import javafx.scene.control.ToggleGroup;
+import javafx.scene.control.*;
 import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -16,7 +12,6 @@ import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 
 import java.util.*;
-import java.util.List;
 
 public class SecondScene {
 
@@ -27,10 +22,8 @@ public class SecondScene {
     static Set<String> selectedColors = new HashSet<>();
     static int currentPlayerIndex = 0;
     static List<TextField> playerFields = new ArrayList<>();
-    static List<Player> players = new ArrayList<>();
+    static List<BasePlayer> players = new ArrayList<>();
     static List<String> selectedColorsByOrder = new ArrayList<>();
-
-
 
     public static Scene secondScene(Stage stage, int number) {
         AnchorPane anchorPane = new AnchorPane();
@@ -45,20 +38,18 @@ public class SecondScene {
         background.fitHeightProperty().bind(scene.heightProperty());
         anchorPane.getChildren().add(background);
 
-        Image textImage=new Image("img.png");
-
-        BackgroundImage backgroundText=new BackgroundImage(
+        Image textImage = new Image("img.png");
+        BackgroundImage backgroundText = new BackgroundImage(
                 textImage,
                 BackgroundRepeat.NO_REPEAT,
                 BackgroundRepeat.NO_REPEAT,
                 BackgroundPosition.CENTER,
-                new BackgroundSize(100,100,true,true,true,false)
+                new BackgroundSize(100, 100, true, true, true, false)
         );
 
         double[] tops = {263.2, 352.4, 441.6, 530.8};
-        int a = number;
 
-        for (int i = 0; i < a; i++) {
+        for (int i = 0; i < number; i++) {
             TextField playerField = new TextField();
             playerField.setBackground(new Background(backgroundText));
             playerField.setMinWidth(buttonWidth);
@@ -69,26 +60,35 @@ public class SecondScene {
             playerField.setFont(Font.font("Segoe Print", FontWeight.BOLD, 20));
             playerField.setAlignment(Pos.CENTER);
 
-            if (a == 1) {
-                a++;
-                playerField.setText("Robot");
-                playerField.setEditable(false);
-            }
-
             anchorPane.getChildren().add(playerField);
             playerFields.add(playerField);
         }
 
-        Font font =Font.loadFont(
+        if (number == 1) {
+            TextField robotField = new TextField("Robot");
+            robotField.setBackground(new Background(backgroundText));
+            robotField.setMinWidth(buttonWidth);
+            robotField.setMinHeight(buttonHeight);
+            robotField.setMaxWidth(maxWidth);
+            robotField.setEditable(false);
+            robotField.setFont(Font.font("Segoe Print", FontWeight.BOLD, 20));
+            robotField.setAlignment(Pos.CENTER);
+            AnchorPane.setLeftAnchor(robotField, 520.0);
+            AnchorPane.setTopAnchor(robotField, tops[1]);
+            anchorPane.getChildren().add(robotField);
+            playerFields.add(robotField);
+        }
+
+        Font font = Font.loadFont(
                 SecondScene.class.getResource("/BebasNeue-Regular.ttf").toExternalForm(), 20);
 
-        Image button =new Image("text.jpg");
-        BackgroundImage backgroundButton=new BackgroundImage(
+        Image button = new Image("text.jpg");
+        BackgroundImage backgroundButton = new BackgroundImage(
                 button,
                 BackgroundRepeat.NO_REPEAT,
                 BackgroundRepeat.NO_REPEAT,
                 BackgroundPosition.CENTER,
-                new BackgroundSize(200,200,false,false,true,false)
+                new BackgroundSize(200, 200, false, false, true, false)
         );
 
         Button nextButton = new Button("Next");
@@ -108,7 +108,7 @@ public class SecondScene {
         AnchorPane.setLeftAnchor(playGame, 950.0);
 
         Button quit = new Button();
-        quit.setBackground(new Background(new BackgroundFill(null,null,null)));
+        quit.setBackground(new Background(new BackgroundFill(null, null, null)));
         quit.setOnAction(actionEvent -> stage.close());
         quit.setMinWidth(100.0);
         quit.setMinHeight(30.0);
@@ -116,33 +116,37 @@ public class SecondScene {
         AnchorPane.setBottomAnchor(quit, 42.0);
         anchorPane.getChildren().add(quit);
 
-
         diceGame(anchorPane, tops[currentPlayerIndex] - 7.0, nextButton);
 
-
         nextButton.setOnAction(e -> {
-
             currentPlayerIndex++;
 
             String name = playerFields.get(currentPlayerIndex - 1).getText().trim();
             String color = selectedColorsByOrder.get(currentPlayerIndex - 1);
 
-            players.add(new Player(name, color));
+            if (name.equalsIgnoreCase("Robot")) {
+                players.add(new ComputerPlayer(name, color));
+            } else {
+                players.add(new HumanPlayer(name, color));
+            }
 
-            if ((number == 1 && currentPlayerIndex < 2) || (number > 1 && currentPlayerIndex < number)) {
+            int totalPlayers = (number == 1) ? 2 : number;
+
+            if (currentPlayerIndex < totalPlayers) {
                 diceGame(anchorPane, tops[currentPlayerIndex] - 7.0, nextButton);
                 nextButton.setDisable(true);
             } else {
                 nextButton.setText("Done");
                 nextButton.setDisable(true);
-
                 anchorPane.getChildren().add(playGame);
+
                 playGame.setOnAction(actionEvent -> {
                     Scene gameScene = BoardGame.board(stage, players);
                     stage.setScene(gameScene);
                 });
             }
         });
+
         return scene;
     }
 
