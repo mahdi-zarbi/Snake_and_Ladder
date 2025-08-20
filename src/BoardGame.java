@@ -4,7 +4,6 @@ import javafx.animation.SequentialTransition;
 import javafx.animation.TranslateTransition;
 import javafx.geometry.Point2D;
 import javafx.geometry.Pos;
-import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -14,7 +13,6 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
-import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -30,19 +28,17 @@ public class BoardGame {
 
         BorderPane root = new BorderPane();
 
-        Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
-        double screenWidth = screenBounds.getWidth();
-        double screenHeight = screenBounds.getHeight();
 
-        ImageView background = new ImageView(new Image("island.jpg"));
+
+        ImageView background = new ImageView(new Image("bak2.jpeg"));
         background.setPreserveRatio(false);
-        background.setFitWidth(screenWidth);
-        background.setFitHeight(890);
+        background.setFitWidth(1000);
+        background.setFitHeight(700);
         root.getChildren().add(background);
 
-        ImageView boardImage = new ImageView(new Image("bord.jpg"));
-        boardImage.setFitWidth(870);
-        boardImage.setFitHeight(870);
+        ImageView boardImage = new ImageView(new Image("board2.jpg"));
+        boardImage.setFitWidth(700);
+        boardImage.setFitHeight(700);
         boardImage.setPreserveRatio(false);
 
         AnchorPane rightPane = new AnchorPane();
@@ -52,7 +48,7 @@ public class BoardGame {
         StackPane centerPane = new StackPane();
         StackPane bottomPane = new StackPane();
         AnchorPane leftPane = new AnchorPane();
-        leftPane.setPrefWidth(500);
+        leftPane.setPrefWidth(300);
 
         Button quit = new Button("Quit");
         quit.setTextFill(Color.RED);
@@ -62,7 +58,7 @@ public class BoardGame {
         AnchorPane.setBottomAnchor(quit, 20.0);
         leftPane.getChildren().add(quit);
 
-        Scene scene = new Scene(root, screenWidth, screenHeight);
+        Scene scene = new Scene(root, 1000,  700);
 
         ImageView[] tokens = new ImageView[players.size()];
         Button[] buttons = new Button[players.size()];
@@ -71,18 +67,15 @@ public class BoardGame {
             Player player = players.get(i);
             Image img = new Image(player.getColor() + ".png");
             ImageView token = new ImageView(img);
-            token.setFitWidth(74.8);
-            token.setFitHeight(74.8);
+            token.setFitWidth(74.8+i);
+            token.setFitHeight(74.8+i);
             tokens[i] = token;
 
             Button roll = new Button("Roll");
             buttons[i] = roll;
             AnchorPane.setLeftAnchor(roll, 55.0);
             AnchorPane.setTopAnchor(roll, i * 150.0 + 150);
-            Point2D startPos = ContorollerGame.coordinates(0);
-            token.setLayoutX(startPos.getX() - d);
-            token.setLayoutY(startPos.getY() - d - 4);
-            leftPane.getChildren().addAll(token, roll);
+            leftPane.getChildren().addAll( roll);
         }
 
         for (int i = 0; i < players.size(); i++) {
@@ -140,7 +133,7 @@ public class BoardGame {
             Player player = players.get(i);
             Label label = new Label(player.getName());
             label.setFont(Font.font("Impact", FontWeight.BOLD, 40));
-            label.setMinWidth((screenWidth - 600) / 3);
+            label.setMinWidth((1000.0 - 600) / 3);
             label.setAlignment(Pos.CENTER);
 
             Color bgColor;
@@ -172,8 +165,6 @@ public class BoardGame {
         root.setBottom(bottomPane);
 
         stage.setResizable(false);
-        stage.setFullScreenExitHint("");
-        stage.setFullScreenExitKeyCombination(null);
         stage.setScene(scene);
         stage.show();
 

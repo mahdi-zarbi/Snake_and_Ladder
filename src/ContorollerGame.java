@@ -6,8 +6,8 @@ public class ContorollerGame {
     public static int winnerIndex = -1;
     public static boolean gameOver = false;
 
-    static double margin = 28.275;
-    static double boardSize = 813.45;
+    static double margin = 22.75;
+    static double boardSize = 654.5;
     static double cellSize = boardSize / 10;
 
     static Map<Integer, Integer> snake = new HashMap<>();
@@ -50,7 +50,7 @@ public class ContorollerGame {
         int column = (row % 2 == 0) ? columnInRow : 9 - columnInRow;
 
         double x = margin + (column * cellSize) + (cellSize / 2);
-        double y = 870 - (margin + (row * cellSize) + (cellSize / 2));
+        double y = 700 - (margin + (row * cellSize) + (cellSize / 2));
 
         return new Point2D(x, y);
     }

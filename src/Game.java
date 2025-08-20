@@ -12,7 +12,6 @@ public class Game extends Application {
     public void start(Stage stage) {
 
         OneScene.oneScene(stage);
-        stage.setFullScreen(true);
 
     }
 }

@@ -63,9 +63,8 @@ public class SecondScene {
 
         Button playGame = new Button("Play Game");
         playGame.setFont(Font.font("Impact", FontWeight.BOLD, 20));
-        AnchorPane.setBottomAnchor(playGame, 0.0);
-        AnchorPane.setRightAnchor(playGame, 0.0);
-        anchorPane.getChildren().add(playGame);
+        AnchorPane.setTopAnchor(playGame, top);
+        AnchorPane.setLeftAnchor(playGame, 45.0);
 
         diceGame(anchorPane, tops[currentPlayerIndex] - 7.0, nextButton);
 
@@ -87,15 +86,13 @@ public class SecondScene {
                 nextButton.setText("Done");
                 nextButton.setDisable(true);
 
-
+                anchorPane.getChildren().add(playGame);
                 playGame.setOnAction(actionEvent -> {
                     Scene gameScene = BoardGame.board(stage, players);
                     stage.setScene(gameScene);
-                    stage.setFullScreen(true);
                 });
             }
         });
-        stage.setFullScreen(true);
         return anchorPane;
     }
 
