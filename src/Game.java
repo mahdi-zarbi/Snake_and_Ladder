@@ -11,7 +11,7 @@ public class Game extends Application {
     @Override
     public void start(Stage stage) {
 
-        OneScene.oneScene(stage);
+        MainScene.getScene(stage);
 
     }
 }

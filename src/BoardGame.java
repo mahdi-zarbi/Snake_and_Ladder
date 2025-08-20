@@ -22,33 +22,32 @@ public class BoardGame {
 
     static double d = 36;
 
+    static int number;
+
     public static Scene board(Stage stage, List<Player> players) {
 
         ContorollerGame.initializeBoard();
 
-        BorderPane root = new BorderPane();
+//        BorderPane root = new BorderPane();
+
+        AnchorPane anchorPane = new AnchorPane();
 
 
 
-        ImageView background = new ImageView(new Image("bak2.jpeg"));
+        ImageView background = new ImageView(new Image("img_2.png"));
         background.setPreserveRatio(false);
-        background.setFitWidth(1000);
+        background.setFitWidth(500);
         background.setFitHeight(700);
-        root.getChildren().add(background);
+        anchorPane.getChildren().add(background);
 
         ImageView boardImage = new ImageView(new Image("board2.jpg"));
         boardImage.setFitWidth(700);
         boardImage.setFitHeight(700);
         boardImage.setPreserveRatio(false);
+        boardImage.setX(400);
+        boardImage.setY(0);
 
-        AnchorPane rightPane = new AnchorPane();
-        rightPane.getChildren().add(boardImage);
-
-        StackPane topPane = new StackPane();
-        StackPane centerPane = new StackPane();
-        StackPane bottomPane = new StackPane();
-        AnchorPane leftPane = new AnchorPane();
-        leftPane.setPrefWidth(300);
+        anchorPane.getChildren().add(boardImage);
 
         Button quit = new Button("Quit");
         quit.setTextFill(Color.RED);
@@ -56,9 +55,9 @@ public class BoardGame {
         quit.setOnAction(actionEvent -> stage.close());
         AnchorPane.setLeftAnchor(quit, 20.0);
         AnchorPane.setBottomAnchor(quit, 20.0);
-        leftPane.getChildren().add(quit);
+        anchorPane.getChildren().add(quit);
 
-        Scene scene = new Scene(root, 1000,  700);
+        Scene scene = new Scene(anchorPane, 1100,  700);
 
         ImageView[] tokens = new ImageView[players.size()];
         Button[] buttons = new Button[players.size()];
@@ -75,8 +74,11 @@ public class BoardGame {
             buttons[i] = roll;
             AnchorPane.setLeftAnchor(roll, 55.0);
             AnchorPane.setTopAnchor(roll, i * 150.0 + 150);
-            leftPane.getChildren().addAll( roll);
+            anchorPane.getChildren().addAll( roll);
         }
+
+
+
 
         for (int i = 0; i < players.size(); i++) {
             Player player = players.get(i);
@@ -90,7 +92,7 @@ public class BoardGame {
             if (player.hasWon()) {
                 AnchorPane.setLeftAnchor(wonLabel, 300.0);
                 AnchorPane.setTopAnchor(wonLabel, i * 150.0 + 85);
-                leftPane.getChildren().add(wonLabel);
+                anchorPane.getChildren().add(wonLabel);
                 break;
             } else {
                 buttons[i].setOnAction(e -> {
@@ -99,19 +101,27 @@ public class BoardGame {
                     }
 
                     ImageView token = tokens[current];
-                    rightPane.getChildren().remove(token);
-                    rightPane.getChildren().add(token);
+                    anchorPane.getChildren().remove(token);
+                    anchorPane.getChildren().add(token);
 
                     List<Point2D> steps = ContorollerGame.movePlayerWithSteps(player, current);
                     SequentialTransition sequence = new SequentialTransition();
-
+                    System.out.println(ContorollerGame.random);
                     for (Point2D step : steps) {
                         TranslateTransition move = new TranslateTransition(Duration.seconds(0.6), token);
-                        move.setToX(step.getX() - token.getLayoutX() - d);
+                        move.setToX(step.getX() - token.getLayoutX() - d+400);
                         move.setToY(step.getY() - token.getLayoutY() - d - 4);
                         move.setInterpolator(Interpolator.EASE_BOTH);
                         sequence.getChildren().add(move);
                     }
+
+                    Image diceNumber =new Image("dice_"+ContorollerGame.random+".png");
+                    ImageView viewDice=new ImageView(diceNumber);
+                    viewDice.setFitWidth(100);
+                    viewDice.setFitHeight(100);
+                    AnchorPane.setTopAnchor(viewDice,current*150.0);
+                    AnchorPane.setLeftAnchor(viewDice,200.0);
+                    anchorPane.getChildren().add(viewDice);
 
                     sequence.setOnFinished(ev -> {
                         if (player.hasWon()) {
@@ -120,7 +130,7 @@ public class BoardGame {
                             win.setBackground(Background.fill(Color.GREEN));
                             AnchorPane.setLeftAnchor(win, 300.0);
                             AnchorPane.setTopAnchor(win, current * 150.0 + 85);
-                            leftPane.getChildren().add(win);
+                            anchorPane.getChildren().add(win);
                         }
                     });
 
@@ -128,41 +138,49 @@ public class BoardGame {
                 });
             }
         }
+        Image imageLabel=new Image("img_4.png");
+
+
 
         for (int i = 0; i < players.size(); i++) {
+
+            ImageView imageView=new ImageView(imageLabel);
+            imageView.setFitHeight(150);
+            imageView.setFitWidth(250);
+            if(players.size()<2){
+                AnchorPane.setLeftAnchor(imageView,1.0);
+                AnchorPane.setTopAnchor(imageView,i*180+70.0);
+            }else{
+                AnchorPane.setLeftAnchor(imageView,1.0);
+                AnchorPane.setTopAnchor(imageView,i*150+10.0);
+            }
+
+            anchorPane.getChildren().add(imageView);
             Player player = players.get(i);
             Label label = new Label(player.getName());
-            label.setFont(Font.font("Impact", FontWeight.BOLD, 40));
-            label.setMinWidth((1000.0 - 600) / 3);
+            label.setFont(Font.font("Impact", 30));
+            label.setMinWidth(149);
             label.setAlignment(Pos.CENTER);
+
 
             Color bgColor;
             switch (player.getColor().toLowerCase()) {
-                case "red":
-                    bgColor = Color.RED;
-                    break;
-                case "yellow":
-                    bgColor = Color.YELLOW;
-                    break;
-                case "green":
-                    bgColor = Color.GREEN;
-                    break;
-                default:
-                    bgColor = Color.BLUE;
-                    break;
+                case "red": bgColor = Color.RED; break;
+                case "yellow": bgColor = Color.DARKORANGE; break;
+                case "green": bgColor = Color.GREEN; break;
+                default: bgColor = Color.BLUE; break;
             }
-            label.setBackground(Background.fill(bgColor));
+            label.setTextFill(bgColor);
 
-            AnchorPane.setLeftAnchor(label, 55.0);
-            AnchorPane.setTopAnchor(label, i * 150.0 + 85);
-            leftPane.getChildren().add(label);
+            if(players.size()<2){
+                AnchorPane.setLeftAnchor(label,50.0);
+                AnchorPane.setTopAnchor(label,i*180+100.0);
+            }else{
+                AnchorPane.setLeftAnchor(label,50.0);
+                AnchorPane.setTopAnchor(label,i*150+70.0);
+            }
+            anchorPane.getChildren().add(label);
         }
-
-        root.setLeft(leftPane);
-        root.setRight(rightPane);
-        root.setCenter(centerPane);
-        root.setTop(topPane);
-        root.setBottom(bottomPane);
 
         stage.setResizable(false);
         stage.setScene(scene);

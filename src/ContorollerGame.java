@@ -13,6 +13,9 @@ public class ContorollerGame {
     static Map<Integer, Integer> snake = new HashMap<>();
     static Map<Integer, Integer> ladder = new HashMap<>();
 
+    static int random;
+
+
     public static void initializeBoard() {
 
         gameOver = false;
@@ -66,6 +69,9 @@ public class ContorollerGame {
         int currentPos = player.getPosition();
         int diceRoll = rand();
         int tentativePos = currentPos + diceRoll;
+
+        random =diceRoll;
+
 
         if (tentativePos > 100) {
             tentativePos = currentPos;
