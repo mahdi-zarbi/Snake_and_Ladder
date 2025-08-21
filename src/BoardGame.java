@@ -47,8 +47,8 @@ public class BoardGame {
         quit.setTextFill(Color.RED);
         quit.setFont(Font.font("Impact", FontWeight.BOLD, 20));
         quit.setOnAction(actionEvent -> stage.close());
-        AnchorPane.setLeftAnchor(quit, 20.0);
-        AnchorPane.setBottomAnchor(quit, 20.0);
+        AnchorPane.setLeftAnchor(quit, 340.0);
+        AnchorPane.setBottomAnchor(quit, 0.0);
         anchorPane.getChildren().add(quit);
 
         Scene scene = new Scene(anchorPane, 1100, 700);
@@ -64,9 +64,9 @@ public class BoardGame {
             token.setFitHeight(74.8 + i);
             tokens[i] = token;
 
-            Button roll = new Button("Roll");
+            Button roll = new Button("Rolling");
             buttons[i] = roll;
-            AnchorPane.setLeftAnchor(roll, 55.0);
+            AnchorPane.setLeftAnchor(roll, 40.0);
             AnchorPane.setTopAnchor(roll, i * 150.0 + 150);
             anchorPane.getChildren().add(roll);
         }
@@ -117,7 +117,7 @@ public class BoardGame {
             imageView.setFitWidth(250);
             if (players.size() < 2) {
                 AnchorPane.setLeftAnchor(imageView, 1.0);
-                AnchorPane.setTopAnchor(imageView, i * 180 + 70.0);
+                AnchorPane.setTopAnchor(imageView, i * 200 + 80.0);
             } else {
                 AnchorPane.setLeftAnchor(imageView, 1.0);
                 AnchorPane.setTopAnchor(imageView, i * 150 + 10.0);
@@ -142,7 +142,7 @@ public class BoardGame {
 
             if (players.size() < 2) {
                 AnchorPane.setLeftAnchor(label, 50.0);
-                AnchorPane.setTopAnchor(label, i * 180 + 100.0);
+                AnchorPane.setTopAnchor(label, i * 200.0 + 100.0);
             } else {
                 AnchorPane.setLeftAnchor(label, 50.0);
                 AnchorPane.setTopAnchor(label, i * 150 + 70.0);
@@ -180,7 +180,7 @@ public class BoardGame {
             sequence.getChildren().add(move);
         }
 
-        String imagePath = "dice_" + ControllerGame.random + ".png";
+        String imagePath = "Image_Font/dice_" + ControllerGame.random + ".png";
         InputStream stream = BoardGame.class.getResourceAsStream(imagePath);
         diceView.setImage(new Image(stream));
         AnchorPane.setTopAnchor(diceView, current * 145.0 + 45);

@@ -56,6 +56,7 @@ public class SecondPane {
             playerField.setMinHeight(buttonHeight);
             playerField.setMaxWidth(maxWidth);
             AnchorPane.setLeftAnchor(playerField, 520.0);
+            playerField.setStyle("-fx-text-fill:white");
             AnchorPane.setTopAnchor(playerField, tops[i]);
             playerField.setFont(Font.font("Segoe Print", FontWeight.BOLD, 20));
             playerField.setAlignment(Pos.CENTER);
@@ -72,6 +73,7 @@ public class SecondPane {
             robotField.setMaxWidth(maxWidth);
             robotField.setEditable(false);
             robotField.setFont(Font.font("Segoe Print", FontWeight.BOLD, 20));
+            robotField.setStyle("-fx-text-fill: white;");
             robotField.setAlignment(Pos.CENTER);
             AnchorPane.setLeftAnchor(robotField, 520.0);
             AnchorPane.setTopAnchor(robotField, tops[1]);
