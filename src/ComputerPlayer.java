@@ -5,19 +5,19 @@ public class ComputerPlayer extends BasePlayer {
 
     @Override
     public void takeTurn() {
-        int dice = ContorollerGame.rand();
+        int dice = ControllerGame.rand();
         int tentativePos = position + dice;
 
         if (tentativePos > 100) tentativePos = position;
 
-        int finalPos = ContorollerGame.snake.getOrDefault(tentativePos,
-                ContorollerGame.ladder.getOrDefault(tentativePos, tentativePos));
+        int finalPos = ControllerGame.snake.getOrDefault(tentativePos,
+                ControllerGame.ladder.getOrDefault(tentativePos, tentativePos));
 
         setPosition(finalPos);
 
         if (finalPos == 100) {
             hasWon = true;
-            ContorollerGame.gameOver = true;
+            ControllerGame.gameOver = true;
         }
     }
 }

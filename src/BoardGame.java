@@ -25,17 +25,17 @@ public class BoardGame {
 
     public static Scene board(Stage stage, List<BasePlayer> players) {
 
-        ContorollerGame.initializeBoard();
+        ControllerGame.initializeBoard();
 
         AnchorPane anchorPane = new AnchorPane();
 
-        ImageView background = new ImageView(new Image("img_2.png"));
+        ImageView background = new ImageView(new Image("Image_Font/background.png"));
         background.setPreserveRatio(false);
         background.setFitWidth(500);
         background.setFitHeight(700);
         anchorPane.getChildren().add(background);
 
-        ImageView boardImage = new ImageView(new Image("board2.jpg"));
+        ImageView boardImage = new ImageView(new Image("Image_Font/board_game.jpg"));
         boardImage.setFitWidth(700);
         boardImage.setFitHeight(700);
         boardImage.setPreserveRatio(false);
@@ -58,7 +58,7 @@ public class BoardGame {
 
         for (int i = 0; i < players.size(); i++) {
             BasePlayer player = players.get(i);
-            Image img = new Image(player.getColor() + ".png");
+            Image img = new Image("Image_Font/dice_"+player.getColor() + ".png");
             ImageView token = new ImageView(img);
             token.setFitWidth(74.8 + i);
             token.setFitHeight(74.8 + i);
@@ -79,7 +79,7 @@ public class BoardGame {
         for (int i = 0; i < players.size(); i++) {
             BasePlayer player = players.get(i);
 
-            Image winnerImage = new Image("winner.png");
+            Image winnerImage = new Image("Image_Font/winner.png");
             ImageView winner = new ImageView(winnerImage);
             winner.setFitHeight(70);
             winner.setFitWidth(70);
@@ -109,7 +109,7 @@ public class BoardGame {
             }
         }
 
-        Image imageLabel = new Image("img_4.png");
+        Image imageLabel = new Image("Image_Font/label.png");
 
         for (int i = 0; i < players.size(); i++) {
             ImageView imageView = new ImageView(imageLabel);
@@ -169,7 +169,7 @@ public class BoardGame {
         anchorPane.getChildren().remove(token);
         anchorPane.getChildren().add(token);
 
-        List<Point2D> steps = ContorollerGame.movePlayerWithSteps(player, current);
+        List<Point2D> steps = ControllerGame.movePlayerWithSteps(player, current);
         SequentialTransition sequence = new SequentialTransition();
 
         for (Point2D step : steps) {
@@ -180,7 +180,7 @@ public class BoardGame {
             sequence.getChildren().add(move);
         }
 
-        String imagePath = "dice_" + ContorollerGame.random + ".png";
+        String imagePath = "dice_" + ControllerGame.random + ".png";
         InputStream stream = BoardGame.class.getResourceAsStream(imagePath);
         diceView.setImage(new Image(stream));
         AnchorPane.setTopAnchor(diceView, current * 145.0 + 45);

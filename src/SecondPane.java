@@ -13,7 +13,7 @@ import javafx.stage.Stage;
 
 import java.util.*;
 
-public class SecondScene {
+public class SecondPane {
 
     static double buttonWidth = 150.0;
     static double buttonHeight = 46.0;
@@ -29,7 +29,7 @@ public class SecondScene {
         AnchorPane anchorPane = new AnchorPane();
         Scene scene = new Scene(anchorPane, 1100, 700);
 
-        Image image = new Image("pane.png");
+        Image image = new Image("Image_Font/second_pane.png");
         ImageView background = new ImageView(image);
         background.setPreserveRatio(false);
         background.setSmooth(true);
@@ -38,7 +38,7 @@ public class SecondScene {
         background.fitHeightProperty().bind(scene.heightProperty());
         anchorPane.getChildren().add(background);
 
-        Image textImage = new Image("img.png");
+        Image textImage = new Image("Image_Font/img.png");
         BackgroundImage backgroundText = new BackgroundImage(
                 textImage,
                 BackgroundRepeat.NO_REPEAT,
@@ -80,9 +80,9 @@ public class SecondScene {
         }
 
         Font font = Font.loadFont(
-                SecondScene.class.getResource("/BebasNeue-Regular.ttf").toExternalForm(), 20);
+                SecondPane.class.getResource("/Image_Font/BebasNeue-Regular.ttf").toExternalForm(), 20);
 
-        Image button = new Image("text.jpg");
+        Image button = new Image("Image_Font/text.jpg");
         BackgroundImage backgroundButton = new BackgroundImage(
                 button,
                 BackgroundRepeat.NO_REPEAT,
@@ -116,7 +116,7 @@ public class SecondScene {
         AnchorPane.setBottomAnchor(quit, 42.0);
         anchorPane.getChildren().add(quit);
 
-        diceGame(anchorPane, tops[currentPlayerIndex] - 7.0, nextButton);
+        setColor(anchorPane, tops[currentPlayerIndex] - 7.0, nextButton);
 
         nextButton.setOnAction(e -> {
             currentPlayerIndex++;
@@ -133,7 +133,7 @@ public class SecondScene {
             int totalPlayers = (number == 1) ? 2 : number;
 
             if (currentPlayerIndex < totalPlayers) {
-                diceGame(anchorPane, tops[currentPlayerIndex] - 7.0, nextButton);
+                setColor(anchorPane, tops[currentPlayerIndex] - 7.0, nextButton);
                 nextButton.setDisable(true);
             } else {
                 nextButton.setText("Done");
@@ -150,7 +150,7 @@ public class SecondScene {
         return scene;
     }
 
-    public static void diceGame(AnchorPane anchorPane, double height, Button nextButton) {
+    public static void setColor(AnchorPane anchorPane, double height, Button nextButton) {
         ColorAdjust grayscale = new ColorAdjust();
         grayscale.setSaturation(-1);
 
@@ -168,7 +168,7 @@ public class SecondScene {
 
         for (int i = 0; i < availableColors.size(); i++) {
             String color = availableColors.get(i);
-            Image img = new Image(color + ".png");
+            Image img = new Image("Image_Font/dice_"+color + ".png");
             ImageView view = new ImageView(img);
             view.setFitWidth(95);
             view.setFitHeight(95);

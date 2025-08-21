@@ -1,7 +1,7 @@
 import javafx.geometry.Point2D;
 import java.util.*;
 
-public class ContorollerGame {
+public class ControllerGame {
 
     public static int winnerIndex = -1;
     public static boolean gameOver = false;

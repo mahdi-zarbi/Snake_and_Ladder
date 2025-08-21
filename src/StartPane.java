@@ -7,14 +7,14 @@ import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.stage.Stage;
 
-public class MainScene {
+public class StartPane {
 
-    public static Scene getScene(Stage stage) {
+    public static Scene startScene(Stage stage) {
 
         AnchorPane root = new AnchorPane();
         Scene scene = new Scene(root, 1100, 700);
 
-        Image image = new Image("/startpane.jpg");
+        Image image = new Image("/Image_Font/start_pane.jpg");
         ImageView background = new ImageView(image);
         background.setPreserveRatio(false);
         background.setSmooth(true);
@@ -23,7 +23,7 @@ public class MainScene {
         background.fitHeightProperty().bind(scene.heightProperty());
         root.getChildren().add(background);
 
-        Button onePlayer = new Button(); // 🎮 بازی با ربات
+        Button onePlayer = new Button();
         onePlayer.setMinSize(75, 85);
         AnchorPane.setRightAnchor(onePlayer, 230.0);
         AnchorPane.setBottomAnchor(onePlayer, 315.0);
@@ -48,22 +48,22 @@ public class MainScene {
         fourPlayers.setBackground(new Background(new BackgroundFill(null, null, null)));
 
         onePlayer.setOnAction(actionEvent -> {
-            Scene secondScene = SecondScene.secondScene(stage, 1); // فقط یک بازیکن انسانی
+            Scene secondScene = SecondPane.secondScene(stage, 1);
             stage.setScene(secondScene);
         });
 
         twoPlayers.setOnAction(actionEvent -> {
-            Scene secondScene = SecondScene.secondScene(stage, 2);
+            Scene secondScene = SecondPane.secondScene(stage, 2);
             stage.setScene(secondScene);
         });
 
         threePlayers.setOnAction(actionEvent -> {
-            Scene secondScene = SecondScene.secondScene(stage, 3);
+            Scene secondScene = SecondPane.secondScene(stage, 3);
             stage.setScene(secondScene);
         });
 
         fourPlayers.setOnAction(actionEvent -> {
-            Scene secondScene = SecondScene.secondScene(stage, 4);
+            Scene secondScene = SecondPane.secondScene(stage, 4);
             stage.setScene(secondScene);
         });
 
