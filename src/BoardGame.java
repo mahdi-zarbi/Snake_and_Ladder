@@ -25,12 +25,10 @@ public class BoardGame {
 
     public static Scene board(Stage stage, List<BasePlayer> players) {
 
-        ControllerGame.initializeBoard();
 
         AnchorPane anchorPane = new AnchorPane();
 
         ImageView background = new ImageView(new Image("Image_Font/background.png"));
-        background.setPreserveRatio(false);
         background.setFitWidth(500);
         background.setFitHeight(700);
         anchorPane.getChildren().add(background);
@@ -38,7 +36,6 @@ public class BoardGame {
         ImageView boardImage = new ImageView(new Image("Image_Font/board_game.jpg"));
         boardImage.setFitWidth(700);
         boardImage.setFitHeight(700);
-        boardImage.setPreserveRatio(false);
         boardImage.setX(400);
         boardImage.setY(0);
         anchorPane.getChildren().add(boardImage);
@@ -84,8 +81,8 @@ public class BoardGame {
             winner.setFitHeight(70);
             winner.setFitWidth(70);
 
-            final int current = i;
-            final int next = (i + 1) % players.size();
+            int current = i;
+            int next = (i + 1) % players.size();
 
             if (player.hasWon()) {
                 AnchorPane.setLeftAnchor(winner, 300.0);
@@ -169,7 +166,7 @@ public class BoardGame {
         anchorPane.getChildren().remove(token);
         anchorPane.getChildren().add(token);
 
-        List<Point2D> steps = ControllerGame.movePlayerWithSteps(player, current);
+        List<Point2D> steps = ControllerGame.movePlayerWithAnimation(player, current);
         SequentialTransition sequence = new SequentialTransition();
 
         for (Point2D step : steps) {

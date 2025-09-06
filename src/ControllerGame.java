@@ -15,14 +15,13 @@ public class ControllerGame {
 
     public static int random;
 
-    public static void initializeBoard() {
-        gameOver = false;
-        winnerIndex = -1;
-        snake.clear();
-        ladder.clear();
-        initSnakes();
-        initLadders();
-    }
+//    public static void initializeBoard() {
+//        gameOver = false;
+//        winnerIndex = -1;
+//        snake.clear();
+//        ladder.clear();
+
+//    }
 
     private static void initSnakes() {
         snake.put(24, 19);
@@ -55,10 +54,13 @@ public class ControllerGame {
         double x = margin + (column * cellSize) + (cellSize / 2);
         double y = 700 - (margin + (row * cellSize) + (cellSize / 2));
 
+        initSnakes();
+        initLadders();
+
         return new Point2D(x, y);
     }
 
-    public static List<Point2D> movePlayerWithSteps(BasePlayer player, int playerIndex) {
+    public static List<Point2D> movePlayerWithAnimation(BasePlayer player, int playerIndex) {
         List<Point2D> steps = new ArrayList<>();
 
         if (gameOver) {
@@ -78,8 +80,7 @@ public class ControllerGame {
 
         steps.add(coordinates(tentativePos));
 
-        int finalPos = snake.getOrDefault(tentativePos,
-                ladder.getOrDefault(tentativePos, tentativePos));
+        int finalPos = snake.getOrDefault(tentativePos,ladder.getOrDefault(tentativePos, tentativePos));
 
         if (finalPos != tentativePos) {
             steps.add(coordinates(finalPos));
@@ -99,7 +100,7 @@ public class ControllerGame {
         return new Random().nextInt(6) + 1;
     }
 
-    public static int getPositionIndex(int playerIndex, List<BasePlayer> players) {
-        return players.get(playerIndex).getPosition();
-    }
+//    public static int getPositionIndex(int playerIndex, List<BasePlayer> players) {
+//        return players.get(playerIndex).getPosition();
+//    }
 }

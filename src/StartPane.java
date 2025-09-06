@@ -9,19 +9,16 @@ import javafx.stage.Stage;
 
 public class StartPane {
 
-    public static Scene startScene(Stage stage) {
+    public static void startScene(Stage stage) {
 
-        AnchorPane root = new AnchorPane();
-        Scene scene = new Scene(root, 1100, 700);
+        AnchorPane anchorPane = new AnchorPane();
+        Scene scene = new Scene(anchorPane, 1100, 700);
 
         Image image = new Image("/Image_Font/start_pane.jpg");
         ImageView background = new ImageView(image);
-        background.setPreserveRatio(false);
-        background.setSmooth(true);
-        background.setOpacity(1);
         background.fitWidthProperty().bind(scene.widthProperty());
         background.fitHeightProperty().bind(scene.heightProperty());
-        root.getChildren().add(background);
+        anchorPane.getChildren().add(background);
 
         Button onePlayer = new Button();
         onePlayer.setMinSize(75, 85);
@@ -75,12 +72,11 @@ public class StartPane {
         AnchorPane.setRightAnchor(quit, 210.0);
         AnchorPane.setBottomAnchor(quit, 42.0);
 
-        root.getChildren().addAll(onePlayer, twoPlayers, threePlayers, fourPlayers, quit);
+        anchorPane.getChildren().addAll(onePlayer, twoPlayers, threePlayers, fourPlayers, quit);
 
         stage.setResizable(false);
         stage.setScene(scene);
         stage.show();
 
-        return scene;
     }
 }
